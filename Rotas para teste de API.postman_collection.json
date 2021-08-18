@@ -1,0 +1,288 @@
+{
+	"info": {
+		"_postman_id": "52f14bb6-ddda-4096-9d91-0267b86e651b",
+		"name": "Rotas para teste de API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Listar Usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario?nome=Wenia&email=wenia@gmail.com&cpf=98765432120&senha=123&status=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "Wenia"
+						},
+						{
+							"key": "email",
+							"value": "wenia@gmail.com"
+						},
+						{
+							"key": "cpf",
+							"value": "98765432120"
+						},
+						{
+							"key": "senha",
+							"value": "123"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar Usuario por ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1?nome=Wenia Barreto&email=wenia@gmail.com&cpf=98765432120&senha=123654&status=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1"
+					],
+					"query": [
+						{
+							"key": "nome",
+							"value": "Wenia Barreto"
+						},
+						{
+							"key": "email",
+							"value": "wenia@gmail.com"
+						},
+						{
+							"key": "cpf",
+							"value": "98765432120"
+						},
+						{
+							"key": "senha",
+							"value": "123654"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir Usuario por ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar tarefas do Usuario por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1/tarefa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1",
+						"tarefa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar uma tarefa do usuario pelo id da tarefa",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1/tarefa/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1",
+						"tarefa",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar tarefa relacionada a ID usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1/tarefa?usuario_id=1&status=1&descricao=Comer Frutas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1",
+						"tarefa"
+					],
+					"query": [
+						{
+							"key": "usuario_id",
+							"value": "1"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						},
+						{
+							"key": "descricao",
+							"value": "Comer Frutas"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar tarefa por ID",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1/tarefa/1?usuario_id=1&status=1&descricao=Comprar Frutas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1",
+						"tarefa",
+						"1"
+					],
+					"query": [
+						{
+							"key": "usuario_id",
+							"value": "1"
+						},
+						{
+							"key": "status",
+							"value": "1"
+						},
+						{
+							"key": "descricao",
+							"value": "Comprar Frutas"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir tarefa por ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8009/usuario/1/tarefa/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8009",
+					"path": [
+						"usuario",
+						"1",
+						"tarefa",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
