@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Tarefa;
@@ -39,14 +40,8 @@ class TarefaController extends Controller
             'descricao' => 'required',
         ];
 
-        $menssagens = [
-            'usuario_id.required' => 'O atributo usuario_id é obrigatório',
-            'usuario_id.exists' => 'O atributo usuario_id deve conter um ID de usuario válido',
-            'descricao.required' => 'A tarefa deve conter uma descrição',
-            'status.required' => 'Deve ser informado o status da tarefa'
-        ];
 
-        $this->validate($request, $regras, $menssagens);
+        $this->validate($request, $regras, Validator::MESSAGES);
 
         Tarefa::create($request->all());
 
@@ -61,17 +56,10 @@ class TarefaController extends Controller
             'usuario_id' => 'required'
         ];
 
-        $message = [
-            'usuario_id.required' => 'O atributo usuario_id é obrigatório',
-            'usuario_id.exists' => 'O atributo usuario_id deve conter um ID de usuario válido',
-            'descricao.required' => 'A tarefa deve conter uma descrição',
-            'status.required' => 'Deve ser informado o status da tarefa'
-        ];
 
-        $this->validate($request, $regras, $message);
+        $this->validate($request, $regras, Validator::MESSAGES);
 
         try {
-
             $tarefa = Tarefa::findOrfail($id);
             $tarefa->usuario_id = $request->input('usuario_id');
             $tarefa->status = $request->input('status');

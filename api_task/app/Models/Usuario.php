@@ -16,6 +16,10 @@ class Usuario extends Model
         'status'
     ];
 
+    protected $hidden = [
+        'senha',
+    ];
+
     public function tarefas()
     {
         return $this->hasMany(Tarefa::class);

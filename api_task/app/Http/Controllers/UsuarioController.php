@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Enuns\UsuarioStatusEnum;
+use App\Exceptions\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Tarefa;
 use App\Models\Usuario;
+use App\Services\PasswordService;
+use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
 
 
@@ -13,7 +17,8 @@ class UsuarioController extends Controller
 {
     public function listar()
     {
-        $usuarios = Usuario::all();
+        $usuarios = Usuario::where('status', '!=', UsuarioStatusEnum::EXCLUIDO)
+            ->paginate();
 
         return response()->json($usuarios, 200);
     }
@@ -33,22 +38,14 @@ class UsuarioController extends Controller
         $regras = [
             'nome' => 'required',
             'email' => 'required|email|unique:usuarios',
-            'cpf' => 'required|cpf',
-            'senha' => 'required',
-            'status' => 'numeric'
+            'cpf' => 'required|cpf|unique:usuarios',
+            'senha' => 'required'
         ];
 
-        $message = [
-            'nome.required' => 'O atributo nome é obrigatório',
-            'email.required' => 'O atributo email é obrigatório',
-            'email.email' => 'O atributo email precisar ser um email válido',
-            'cpf.required' => 'O atributo cpf é obrigatório',
-            'cpf.cpf' => 'O atributo cpf deve ser válido',
-            'senha.required' => 'O atributo senha é obrigatório',
-            'status.numeric' => 'O atributo status deve ser numérico',
-        ];
+        $this->validate($request, $regras, Validator::MESSAGES);
 
-        $this->validate($request, $regras, $message);
+        $request['senha'] = PasswordService::criptografar($request['senha']);
+        $request['status'] = UsuarioStatusEnum::ATIVO;
 
         Usuario::create($request->all());
 
@@ -61,28 +58,16 @@ class UsuarioController extends Controller
             'nome' => 'required',
             'email' => 'required',
             'cpf' => 'required|cpf',
-            'senha' => 'required',
             'status' => 'numeric'
         ];
 
-        $message = [
-            'nome.required' => 'O atributo nome é obrigatório',
-            'email.required' => 'O atributo email é obrigatório',
-            'cpf.required' => 'O atributo cpf é obrigatório',
-            'cpf.cpf' => 'O atributo cpf deve ser válido',
-            'senha.required' => 'O atributo senha é obrigatório',
-            'status.numeric' => 'O atributo status deve ser numérico',
-        ];
-
-        $this->validate($request, $regras, $message);
+        $this->validate($request, $regras, Validator::MESSAGES);
 
         try {
-
             $usuario = Usuario::findOrFail($id);
             $usuario->nome = $request->nome;
             $usuario->email = $request->email;
             $usuario->cpf = $request->cpf;
-            $usuario->senha = $request->senha;
             $usuario->status = $request->status;
             $usuario->save();
 
@@ -95,8 +80,17 @@ class UsuarioController extends Controller
     public function excluirPorId($id)
     {
         try {
-            $usuario = Usuario::findOrfail($id);
-            $usuario->delete();
+
+            $tarefa = Usuario::findOrFail($id)->tarefas;
+            $usuario = Usuario::findOrFail($id);
+            //dd($tarefa);
+            if (!empty($tarefa > '[]')) {
+                $usuario->status = UsuarioStatusEnum::EXCLUIDO;
+                $usuario->save();
+                return response()->json(['menssagem' => 'Usuário removido com sucesso'], 200);
+            } else {
+                $usuario->delete();
+            }
 
             return response()->json(['menssagem' => 'Usuário removido com sucesso'], 200);
         } catch (ModelNotFoundException $e) {
