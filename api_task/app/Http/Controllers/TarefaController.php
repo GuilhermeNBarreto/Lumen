@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Tarefa;
 use App\Models\Usuario;
-use PhpParser\Node\Stmt\TryCatch;
 
 class TarefaController extends Controller
 {
