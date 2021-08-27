@@ -55,7 +55,6 @@ class TarefaController extends Controller
             'usuario_id' => 'required'
         ];
 
-
         $this->validate($request, $regras, Validator::MESSAGES);
 
         try {

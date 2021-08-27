@@ -80,14 +80,11 @@ class UsuarioController extends Controller
     public function excluirPorId($id)
     {
         try {
-
-            $tarefa = Usuario::findOrFail($id)->tarefas;
             $usuario = Usuario::findOrFail($id);
-            //dd($tarefa);
-            if (!empty($tarefa > '[]')) {
+            
+            if ($usuario && count($usuario->tarefas) > 0) {
                 $usuario->status = UsuarioStatusEnum::EXCLUIDO;
                 $usuario->save();
-                return response()->json(['menssagem' => 'Usuário removido com sucesso'], 200);
             } else {
                 $usuario->delete();
             }
