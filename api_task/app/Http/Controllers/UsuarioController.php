@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\Tarefa;
 use App\Models\Usuario;
+use App\Models\ValidacaoUsuario;
 use App\Services\PasswordService;
 use Illuminate\Support\Facades\Hash;
 use PhpParser\Node\Stmt\TryCatch;
@@ -35,12 +36,7 @@ class UsuarioController extends Controller
 
     public function criar(Request $request)
     {
-        $regras = [
-            'nome' => 'required',
-            'email' => 'required|email|unique:usuarios',
-            'cpf' => 'required|cpf|unique:usuarios',
-            'senha' => 'required'
-        ];
+        $regras = ValidacaoUsuario::REGRAS;
 
         $this->validate($request, $regras, Validator::MESSAGES);
 
@@ -54,12 +50,7 @@ class UsuarioController extends Controller
 
     public function editar(Request $request, $id)
     {
-        $regras = [
-            'nome' => 'required',
-            'email' => 'required',
-            'cpf' => 'required|cpf',
-            'status' => 'numeric'
-        ];
+        $regras = ValidacaoUsuario::REGRAS;
 
         $this->validate($request, $regras, Validator::MESSAGES);
 
